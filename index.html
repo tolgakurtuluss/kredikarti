@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kredi Kartı Akıllı Ekstre Takvimi</title>
+
+<style>
+:root {
+    --bg: #f3f5f8;
+    --surface: #ffffff;
+    --text: #17202a;
+    --muted: #697386;
+    --border: #e4e7ec;
+
+    --green: #16a34a;
+    --green-bg: #ecfdf3;
+
+    --yellow: #ca8a04;
+    --yellow-bg: #fefce8;
+
+    --orange: #ea580c;
+    --orange-bg: #fff7ed;
+
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+
+    --shadow: 0 8px 30px rgba(15, 23, 42, .07);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+.container {
+    width: min(1250px, calc(100% - 28px));
+    margin: auto;
+    padding: 24px 0 40px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: -.5px;
+}
+
+.header p {
+    margin: 7px 0 0;
+    color: var(--muted);
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+/* TOP RECOMMENDATION */
+
+.today-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+}
+
+.today-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+}
+
+.today-card {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 4px 0;
+}
+
+.today-reason {
+    color: var(--muted);
+    max-width: 700px;
+    line-height: 1.5;
+}
+
+.today-stats {
+    text-align: right;
+}
+
+.today-days {
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.today-days-label {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* SETTINGS */
+
+.section-title {
+    margin: 0 0 15px;
+    font-size: 18px;
+}
+
+.card-settings {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.card-setting {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.card-setting-title {
+    font-weight: 700;
+    margin-bottom: 13px;
+}
+
+.card-setting label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin: 8px 0 5px;
+}
+
+.card-setting input {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+}
+
+.card-setting input:focus {
+    border-color: var(--blue);
+}
+
+/* CALENDAR */
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.month-title {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 7px;
+}
+
+button {
+    border: 0;
+    background: #111827;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button.secondary {
+    background: #eef0f3;
+    color: #111827;
+}
+
+.weekdays,
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.weekday {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px;
+}
+
+.day {
+    position: relative;
+    min-height: 130px;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 9px;
+    cursor: pointer;
+    transition: .15s ease;
+    overflow: hidden;
+}
+
+.day:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    z-index: 2;
+}
+
+.day.empty {
+    background: #fafbfc;
+    cursor: default;
+}
+
+.day.today {
+    outline: 3px solid var(--blue);
+    outline-offset: -3px;
+}
+
+.day-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.today-badge {
+    font-size: 9px;
+    background: var(--blue);
+    color: white;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+
+.best-card {
+    border-radius: 9px;
+    padding: 7px;
+    margin-bottom: 5px;
+}
+
+.best-card strong {
+    display: block;
+    font-size: 13px;
+}
+
+.best-card small {
+    font-size: 10px;
+}
+
+.level-best {
+    background: var(--green-bg);
+    color: #166534;
+    border-left: 4px solid var(--green);
+}
+
+.level-second {
+    background: var(--yellow-bg);
+    color: #854d0e;
+    border-left: 4px solid var(--yellow);
+}
+
+.level-warning {
+    background: var(--orange-bg);
+    color: #9a3412;
+    border-left: 4px solid var(--orange);
+}
+
+.level-cutoff {
+    background: var(--red-bg);
+    color: #991b1b;
+    border-left: 4px solid var(--red);
+}
+
+.cutoff-info {
+    font-size: 9px;
+    color: var(--red);
+    margin-top: 5px;
+}
+
+.payment-info {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-color {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+}
+
+.legend-green {
+    background: var(--green);
+}
+
+.legend-yellow {
+    background: var(--yellow);
+}
+
+.legend-orange {
+    background: var(--orange);
+}
+
+.legend-red {
+    background: var(--red);
+}
+
+.legend-blue {
+    background: var(--blue);
+}
+
+/* DETAIL */
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.5fr;
+    gap: 18px;
+}
+
+.selected-box {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.selected-date {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.selected-card {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 7px 0;
+}
+
+.selected-message {
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.card-results {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.card-result {
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 13px;
+}
+
+.card-result.best {
+    border: 2px solid var(--green);
+    background: var(--green-bg);
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-name {
+    font-weight: 800;
+}
+
+.result-rank {
+    font-size: 11px;
+    padding: 4px 7px;
+    border-radius: 6px;
+    background: #eef0f3;
+}
+
+.best .result-rank {
+    background: var(--green);
+    color: white;
+}
+
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.result-detail {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.result-detail strong {
+    display: block;
+    color: var(--text);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+    .card-settings {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .container {
+        width: min(100% - 14px, 1250px);
+        padding-top: 12px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .panel {
+        padding: 13px;
+        border-radius: 15px;
+    }
+
+    .today-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .today-stats {
+        text-align: left;
+    }
+
+    .today-card {
+        font-size: 25px;
+    }
+
+    .card-settings {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .day {
+        min-height: 105px;
+        padding: 5px;
+    }
+
+    .day-number {
+        font-size: 11px;
+    }
+
+    .best-card {
+        padding: 5px;
+    }
+
+    .best-card strong {
+        font-size: 10px;
+    }
+
+    .best-card small {
+        font-size: 8px;
+    }
+
+    .payment-info,
+    .cutoff-info {
+        font-size: 8px;
+    }
+
+    .result-details {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 430px) {
+    .card-settings {
+        grid-template-columns: 1fr;
+    }
+
+    .day {
+        min-height: 88px;
+    }
+
+    .calendar-legend {
+        gap: 8px;
+        font-size: 10px;
+    }
+
+    .month-title {
+        font-size: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+    <h1>💳 Akıllı Kredi Kartı Takvimi</h1>
+    <p>
+        Harcamayı hangi kartla yaparsan ekstre ve ödeme tarihini
+        mümkün olduğunca ileri taşıyabileceğini gösterir.
+    </p>
+</header>
+
+
+<!-- BUGÜN -->
+
+<div class="panel today-panel">
+
+    <div>
+        <div class="today-label">BUGÜN İÇİN ÖNERİ</div>
+
+        <div class="today-card" id="todayCard">
+            —
+        </div>
+
+        <div class="today-reason" id="todayReason">
+            Hesaplanıyor...
+        </div>
+    </div>
+
+    <div class="today-stats">
+
+        <div class="today-days" id="todayDays">
+            —
+        </div>
+
+        <div class="today-days-label">
+            yaklaşık ödeme gününe kalan süre
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- KART AYARLARI -->
+
+<div class="panel">
+
+    <h2 class="section-title">
+        Kart ve Ekstre Ayarları
+    </h2>
+
+    <div class="card-settings">
+
+        <div class="card-setting">
+
+            <div class="card-setting-title">
+                🟡 Garanti
+            </div>
+
+            <label>Ekstre kesim günü</label>
+
+            <input
+                type="number"
+                min="1"
+                max="31"
+                data-card="Garanti"
+                data-field="cutoff"
+                value="25"
+            >
+
+            <label>
+                Son ödeme günü
+                <small>(kesimden kaç gün sonra)</small>
+            </label>
+
+            <input
+                type="number"
+                min="1"
+                max="40"
+                data-card="Garanti"
+                data-field="paymentOffset"
+                value="10"
+            >
+
+        </div>
+
+
+        <div class="card-setting">
+
+            <div class="card-setting-title">
+                🔵 İş Bankası
+            </div>
+
+            <label>Ekstre kesim günü</label>
+
+            <input
+                type="number"
+                min="1"
+                max="31"
+                data-card="İş Bankası"
+                data-field="cutoff"
+                value="29"
+            >
+
+            <label>
+                Son ödeme günü
+                <small>(kesimden kaç gün sonra)</small>
+            </label>
+
+            <input
+                type="number"
+                min="1"
+                max="40"
+                data-card="İş Bankası"
+                data-field="paymentOffset"
+                value="10"
+            >
+
+        </div>
+
+
+        <div class="card-setting">
+
+            <div class="card-setting-title">
+                🟢 Kuveyt Türk
+            </div>
+
+            <label>Ekstre kesim günü</label>
+
+            <input
+                type="number"
+                min="1"
+                max="31"
+                data-card="Kuveyt Türk"
+                data-field="cutoff"
+                value="8"
+            >
+
+            <label>
+                Son ödeme günü
+                <small>(kesimden kaç gün sonra)</small>
+            </label>
+
+            <input
+                type="number"
+                min="1"
+                max="40"
+                data-card="Kuveyt Türk"
+                data-field="paymentOffset"
+                value="10"
+            >
+
+        </div>
+
+
+        <div class="card-setting">
+
+            <div class="card-setting-title">
+                🟣 Yapı Kredi
+            </div>
+
+            <label>Ekstre kesim günü</label>
+
+            <input
+                type="number"
+                min="1"
+                max="31"
+                data-card="Yapı Kredi"
+                data-field="cutoff"
+                value="20"
+            >
+
+            <label>
+                Son ödeme günü
+                <small>(kesimden kaç gün sonra)</small>
+            </label>
+
+            <input
+                type="number"
+                min="1"
+                max="40"
+                data-card="Yapı Kredi"
+                data-field="paymentOffset"
+                value="10"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TAKVİM -->
+
+<div class="panel">
+
+    <div class="calendar-header">
+
+        <button
+            class="secondary"
+            onclick="changeMonth(-1)">
+            ‹
+        </button>
+
+        <div
+            class="month-title"
+            id="monthTitle">
+        </div>
+
+        <div class="nav-buttons">
+
+            <button
+                class="secondary"
+                onclick="goToday()">
+                Bugün
+            </button>
+
+            <button
+                class="secondary"
+                onclick="changeMonth(1)">
+                ›
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="weekdays">
+        <div class="weekday">Pzt</div>
+        <div class="weekday">Sal</div>
+        <div class="weekday">Çar</div>
+        <div class="weekday">Per</div>
+        <div class="weekday">Cum</div>
+        <div class="weekday">Cmt</div>
+        <div class="weekday">Paz</div>
+    </div>
+
+
+    <div
+        class="calendar"
+        id="calendar">
+    </div>
+
+
+    <div class="calendar-legend">
+
+        <div class="legend-item">
+            <span class="legend-color legend-green"></span>
+            En avantajlı
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-color legend-yellow"></span>
+            İkinci seçenek
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-color legend-orange"></span>
+            Kesime yaklaşıyor
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-color legend-red"></span>
+            Ekstre kesim günü
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-color legend-blue"></span>
+            Bugün
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SEÇİLEN GÜN -->
+
+<div class="panel">
+
+    <div class="detail-grid">
+
+        <div class="selected-box">
+
+            <div
+                class="selected-date"
+                id="selectedDate">
+            </div>
+
+            <div
+                class="selected-card"
+                id="selectedCard">
+                —
+            </div>
+
+            <div
+                class="selected-message"
+                id="selectedMessage">
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <h2 class="section-title">
+                Kartların Karşılaştırması
+            </h2>
+
+            <div
+                class="card-results"
+                id="cardResults">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY =
+    "smart_credit_card_calendar_v2";
+
+
+const defaultCards = {
+
+    "Garanti": {
+        cutoff: 25,
+        paymentOffset: 10
+    },
+
+    "İş Bankası": {
+        cutoff: 29,
+        paymentOffset: 10
+    },
+
+    "Kuveyt Türk": {
+        cutoff: 8,
+        paymentOffset: 10
+    },
+
+    "Yapı Kredi": {
+        cutoff: 20,
+        paymentOffset: 10
+    }
+
+};
+
+
+let cards = structuredClone(defaultCards);
+
+let currentDate = new Date();
+
+let selectedDate = new Date();
+
+
+function normalizeDate(date) {
+
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    );
+
+}
+
+
+function dateOnly(date) {
+
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    );
+
+}
+
+
+function daysInMonth(year, month) {
+
+    return new Date(
+        year,
+        month + 1,
+        0
+    ).getDate();
+
+}
+
+
+/*
+    Kartın bir sonraki ekstre kesimine
+    kaç gün kaldığını hesaplar.
+*/
+
+function daysUntilCutoff(date, cutoff) {
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    if (day < cutoff) {
+
+        return cutoff - day;
+
+    }
+
+    if (day === cutoff) {
+
+        return 0;
+
+    }
+
+    const currentMonthDays =
+        daysInMonth(year, month);
+
+    return (
+        currentMonthDays -
+        day +
+        cutoff
+    );
+
+}
+
+
+/*
+    Bir harcamanın hangi ekstreye gireceğini
+    ve yaklaşık son ödeme tarihini bulur.
+
+    Kesim gününü geçtiysek:
+        Bir sonraki kesim tarihi
+
+    Kesim gününü henüz geçmediysek:
+        Bu ayki kesim tarihi
+
+    Kesim günü ise:
+        Bugünkü kesim esas alınır.
+*/
+
+function getStatementInfo(date, card) {
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    let cutoffDate;
+
+    if (day <= card.cutoff) {
+
+        const validDay =
+            Math.min(
+                card.cutoff,
+                daysInMonth(year, month)
+            );
+
+        cutoffDate =
+            new Date(
+                year,
+                month,
+                validDay
+            );
+
+    } else {
+
+        const nextMonth =
+            new Date(
+                year,
+                month + 1,
+                1
+            );
+
+        const validDay =
+            Math.min(
+                card.cutoff,
+                daysInMonth(
+                    nextMonth.getFullYear(),
+                    nextMonth.getMonth()
+                )
+            );
+
+        cutoffDate =
+            new Date(
+                nextMonth.getFullYear(),
+                nextMonth.getMonth(),
+                validDay
+            );
+
+    }
+
+
+    const paymentDate =
+        new Date(cutoffDate);
+
+    paymentDate.setDate(
+        paymentDate.getDate() +
+        card.paymentOffset
+    );
+
+
+    const daysToPayment =
+        Math.round(
+            (
+                paymentDate -
+                dateOnly(date)
+            ) /
+            86400000
+        );
+
+
+    return {
+
+        cutoffDate,
+        paymentDate,
+        daysToPayment
+
+    };
+
+}
+
+
+/*
+    Ödeme tarihi en ileri olan kart en avantajlıdır.
+
+    Eşitlik halinde:
+    Kesim tarihi daha uzakta olan tercih edilir.
+*/
+
+function calculateCards(date) {
+
+    const result = [];
+
+    Object.entries(cards).forEach(
+        ([name, card]) => {
+
+            const statement =
+                getStatementInfo(
+                    date,
+                    card
+                );
+
+            const daysToCutoff =
+                daysUntilCutoff(
+                    date,
+                    card.cutoff
+                );
+
+
+            /*
+                Ana skor:
+                Son ödeme tarihine kalan gün.
+
+                Daha büyük = daha avantajlı.
+            */
+
+            const score =
+                statement.daysToPayment;
+
+
+            result.push({
+
+                name,
+                cutoff: card.cutoff,
+                paymentOffset: card.paymentOffset,
+
+                cutoffDate:
+                    statement.cutoffDate,
+
+                paymentDate:
+                    statement.paymentDate,
+
+                daysToPayment:
+                    statement.daysToPayment,
+
+                daysToCutoff,
+
+                score
+
+            });
+
+        }
+    );
+
+
+    result.sort(
+        (a, b) => {
+
+            if (b.score !== a.score) {
+
+                return b.score - a.score;
+
+            }
+
+            return (
+                b.daysToCutoff -
+                a.daysToCutoff
+            );
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+function getLevel(item, rank) {
+
+    if (
+        item.cutoffDate.getTime() ===
+        dateOnly(selectedDate).getTime()
+    ) {
+
+        return "level-cutoff";
+
+    }
+
+    if (rank === 0) {
+
+        return "level-best";
+
+    }
+
+    if (rank === 1) {
+
+        return "level-second";
+
+    }
+
+    if (item.daysToCutoff <= 2) {
+
+        return "level-warning";
+
+    }
+
+    return "level-warning";
+
+}
+
+
+function formatDate(date) {
+
+    return date.toLocaleDateString(
+        "tr-TR",
+        {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function shortDate(date) {
+
+    return date.toLocaleDateString(
+        "tr-TR",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function renderCalendar() {
+
+    const calendar =
+        document.getElementById("calendar");
+
+    calendar.innerHTML = "";
+
+
+    const year =
+        currentDate.getFullYear();
+
+    const month =
+        currentDate.getMonth();
+
+
+    document.getElementById(
+        "monthTitle"
+    ).textContent =
+        currentDate.toLocaleDateString(
+            "tr-TR",
+            {
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+
+    let firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    /*
+        JS:
+        Pazar = 0
+
+        Biz:
+        Pazartesi = 0
+    */
+
+    firstDay =
+        firstDay === 0
+            ? 6
+            : firstDay - 1;
+
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "day empty";
+
+        calendar.appendChild(empty);
+
+    }
+
+
+    const totalDays =
+        daysInMonth(
+            year,
+            month
+        );
+
+
+    const today =
+        normalizeDate(
+            new Date()
+        );
+
+
+    for (
+        let day = 1;
+        day <= totalDays;
+        day++
+    ) {
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+
+        const div =
+            document.createElement("div");
+
+        div.className = "day";
+
+
+        if (
+            date.getTime() ===
+            today.getTime()
+        ) {
+
+            div.classList.add("today");
+
+        }
+
+
+        const results =
+            calculateCards(date);
+
+        const best =
+            results[0];
+
+
+        const rank =
+            results.findIndex(
+                x => x.name === best.name
+            );
+
+
+        const cutoffToday =
+            Object.entries(cards)
+                .filter(
+                    ([name, card]) =>
+                        card.cutoff === day
+                )
+                .map(
+                    ([name]) => name
+                );
+
+
+        const paymentText =
+            best.daysToPayment === 0
+                ? "Bugün ödeme"
+                : `${best.daysToPayment} gün`;
+
+
+
+        div.innerHTML = `
+
+            <div class="day-number">
+
+                <span>${day}</span>
+
+                ${
+                    date.getTime() ===
+                    today.getTime()
+
+                    ? `<span class="today-badge">
+                        BUGÜN
+                       </span>`
+
+                    : ""
+                }
+
+            </div>
+
+
+            <div class="best-card ${getLevel(best, rank)}">
+
+                <strong>
+                    ${best.name}
+                </strong>
+
+                <small>
+                    ödeme: ${shortDate(best.paymentDate)}
+                </small>
+
+            </div>
+
+
+            <div class="payment-info">
+
+                ⏳ ${paymentText}
+
+            </div>
+
+
+            ${
+                cutoffToday.length
+
+                ? `
+                    <div class="cutoff-info">
+                        🔴 Kesim:
+                        ${cutoffToday.join(", ")}
+                    </div>
+                  `
+
+                : ""
+            }
+
+        `;
+
+
+        div.onclick = () => {
+
+            selectedDate =
+                dateOnly(date);
+
+            showSelectedDate(
+                selectedDate
+            );
+
+        };
+
+
+        calendar.appendChild(div);
+
+    }
+
+}
+
+
+function showSelectedDate(date) {
+
+    selectedDate =
+        dateOnly(date);
+
+
+    const results =
+        calculateCards(
+            selectedDate
+        );
+
+
+    const best =
+        results[0];
+
+
+    document.getElementById(
+        "selectedDate"
+    ).textContent =
+        formatDate(
+            selectedDate
+        );
+
+
+    document.getElementById(
+        "selectedCard"
+    ).textContent =
+        best.name;
+
+
+    let message;
+
+
+    if (
+        best.daysToPayment <= 0
+    ) {
+
+        message =
+            "Bu kartın hesaplanan ödeme tarihi bugün veya geçmiş durumda. Gerçek ekstre bilgilerinizi kontrol edin.";
+
+    } else {
+
+        message =
+            `Bu kartı bugün kullanırsanız tahmini ekstre kesimi `
+            +
+            `${shortDate(best.cutoffDate)}, `
+            +
+            `son ödeme tarihi ise `
+            +
+            `${shortDate(best.paymentDate)} `
+            +
+            `olur. Böylece yaklaşık `
+            +
+            `${best.daysToPayment} gün `
+            +
+            `sonra ödeme yaparsınız.`;
+
+    }
+
+
+    document.getElementById(
+        "selectedMessage"
+    ).textContent =
+        message;
+
+
+    const container =
+        document.getElementById(
+            "cardResults"
+        );
+
+
+    container.innerHTML = "";
+
+
+    results.forEach(
+        (item, index) => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "card-result"
+                +
+                (
+                    index === 0
+                        ? " best"
+                        : ""
+                );
+
+
+            let rankText;
+
+
+            if (index === 0) {
+
+                rankText =
+                    "EN AVANTAJLI";
+
+            } else if (index === 1) {
+
+                rankText =
+                    "2. SEÇENEK";
+
+            } else {
+
+                rankText =
+                    `${index + 1}. SEÇENEK`;
+
+            }
+
+
+            div.innerHTML = `
+
+                <div class="result-top">
+
+                    <div class="result-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="result-rank">
+                        ${rankText}
+                    </div>
+
+                </div>
+
+
+                <div class="result-details">
+
+                    <div class="result-detail">
+                        Ekstre kesimi
+                        <strong>
+                            ${shortDate(
+                                item.cutoffDate
+                            )}
+                        </strong>
+                    </div>
+
+
+                    <div class="result-detail">
+                        Son ödeme
+                        <strong>
+                            ${shortDate(
+                                item.paymentDate
+                            )}
+                        </strong>
+                    </div>
+
+
+                    <div class="result-detail">
+                        Ödemeye kalan
+                        <strong>
+                            ${item.daysToPayment} gün
+                        </strong>
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+function updateToday() {
+
+    const today =
+        normalizeDate(
+            new Date()
+        );
+
+
+    const results =
+        calculateCards(
+            today
+        );
+
+
+    const best =
+        results[0];
+
+
+    document.getElementById(
+        "todayCard"
+    ).textContent =
+        best.name;
+
+
+    document.getElementById(
+        "todayDays"
+    ).textContent =
+        best.daysToPayment;
+
+
+    document.getElementById(
+        "todayReason"
+    ).textContent =
+        `Bugün ${best.name} kartını kullanırsanız `
+        +
+        `hesaplanan son ödeme tarihi `
+        +
+        `${shortDate(best.paymentDate)} `
+        +
+        `olur. Bu seçenek diğer kartlara göre `
+        +
+        `ödeme tarihini daha ileri taşıyor.`;
+
+}
+
+
+function changeMonth(amount) {
+
+    currentDate =
+        new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + amount,
+            1
+        );
+
+
+    renderCalendar();
+
+}
+
+
+function goToday() {
+
+    const today =
+        new Date();
+
+    currentDate =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            1
+        );
+
+    selectedDate =
+        normalizeDate(
+            today
+        );
+
+
+    renderCalendar();
+
+    showSelectedDate(
+        selectedDate
+    );
+
+}
+
+
+function saveSettings() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(cards)
+    );
+
+}
+
+
+function loadSettings() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (saved) {
+
+            const parsed =
+                JSON.parse(saved);
+
+
+            Object.entries(parsed)
+                .forEach(
+                    ([name, data]) => {
+
+                        if (
+                            cards[name]
+                        ) {
+
+                            cards[name] = {
+                                ...cards[name],
+                                ...data
+                            };
+
+                        }
+
+                    }
+                );
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Ayarlar okunamadı",
+            error
+        );
+
+    }
+
+
+    document.querySelectorAll(
+        ".card-setting input"
+    ).forEach(
+        input => {
+
+            const name =
+                input.dataset.card;
+
+            const field =
+                input.dataset.field;
+
+
+            input.value =
+                cards[name][field];
+
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    let value =
+                        parseInt(
+                            input.value,
+                            10
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            value
+                        )
+                    ) {
+
+                        value = 1;
+
+                    }
+
+
+                    if (
+                        field ===
+                        "cutoff"
+                    ) {
+
+                        value =
+                            Math.max(
+                                1,
+                                Math.min(
+                                    31,
+                                    value
+                                )
+                            );
+
+                    } else {
+
+                        value =
+                            Math.max(
+                                1,
+                                Math.min(
+                                    40,
+                                    value
+                                )
+                            );
+
+                    }
+
+
+                    cards[name][field] =
+                        value;
+
+
+                    input.value =
+                        value;
+
+
+                    saveSettings();
+
+                    renderCalendar();
+
+                    updateToday();
+
+                    showSelectedDate(
+                        selectedDate
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+loadSettings();
+
+renderCalendar();
+
+updateToday();
+
+showSelectedDate(
+    normalizeDate(
+        new Date()
+    )
+);
+
+</script>
+
+</body>
+</html>
