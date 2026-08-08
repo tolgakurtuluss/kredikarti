@@ -3,637 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kredi Kartı Akıllı Ekstre Takvimi</title>
+<title>Ekstre Takvimi</title>
+<meta name="theme-color" content="#0f1f18">
+<meta name="description" content="Hangi kredi kartını kullanırsan ekstre ve son ödeme tarihini en uzağa taşıyabileceğini gösteren kişisel finans aracı.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --bg: #f1f5f9;
+    --paper: #eef2ee;
     --surface: #ffffff;
-    --text: #0f172a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-    --shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
-    --radius: 18px;
+    --surface-2: #e4e9e3;
+    --ink: #0f1f18;
+    --ink-soft: #4b5c53;
+    --line: #cdd6cb;
+    --shadow: 0 1px 2px rgba(15,31,24,.04), 0 8px 24px rgba(15,31,24,.06);
+    --radius: 14px;
 
-    --green: #16a34a;
-    --green-bg: #ecfdf5;
-    --yellow: #ca8a04;
-    --yellow-bg: #fefce8;
-    --orange: #ea580c;
-    --orange-bg: #fff7ed;
-    --red: #dc2626;
-    --red-bg: #fef2f2;
-    --blue: #2563eb;
-    --blue-bg: #eff6ff;
+    --teal: #1f6f5c;
+    --teal-soft: #e2efe9;
+    --ochre: #a3792f;
+    --ochre-soft: #f4ecdb;
+    --brick: #a8492f;
+    --brick-soft: #f6e6e0;
+    --steel: #3c5a72;
+    --steel-soft: #e6edf1;
 
-    --garanti: #f59e0b;
-    --isbank: #3b82f6;
-    --kuveyt: #10b981;
-    --yapikredi: #8b5cf6;
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
 }
 
 [data-theme="dark"] {
-    --bg: #0f172a;
-    --surface: #1e293b;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
-    --border: #334155;
-    --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
-    --green-bg: #14532d;
-    --yellow-bg: #422006;
-    --orange-bg: #431407;
-    --red-bg: #450a0a;
-    --blue-bg: #1e3a8a;
+    --paper: #0c1512;
+    --surface: #131f1a;
+    --surface-2: #1a2823;
+    --ink: #e9efe9;
+    --ink-soft: #93a69c;
+    --line: #24352d;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.45);
+    --teal-soft: #16332a;
+    --ochre-soft: #2e2413;
+    --brick-soft: #331a12;
+    --steel-soft: #17242d;
 }
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    transition: background 0.25s, color 0.25s;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s, color .25s;
 }
 
-.container {
-    width: min(1180px, calc(100% - 20px));
-    margin: 0 auto;
-    padding: 18px 0 48px;
-}
+.container { width: min(1180px, calc(100% - 24px)); margin: 0 auto; padding: 22px 0 56px; }
 
 /* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.header p {
-    margin: 5px 0 0;
-    color: var(--muted);
-    font-size: 14.5px;
-    max-width: 480px;
-    line-height: 1.45;
-}
-
-.theme-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 15px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    box-shadow: var(--shadow);
-    transition: 0.15s;
-    font-size: 13.5px;
-}
-
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+.header h1 { margin: 0; font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -.5px; }
+.header p { margin: 6px 0 0; color: var(--ink-soft); font-size: 14.5px; max-width: 480px; line-height: 1.5; }
+.header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.theme-btn { background: var(--surface); border: 1px solid var(--line); color: var(--ink); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-family: var(--font-mono); font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 7px; box-shadow: var(--shadow); transition: .15s; }
 .theme-btn:hover { transform: translateY(-1px); }
 
+/* REMINDER BANNER */
+.reminder-banner { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.reminder-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; }
+.reminder-item.urgent { border-color: var(--brick); background: var(--brick-soft); }
+.reminder-item.soon { border-color: var(--ochre); background: var(--ochre-soft); }
+.reminder-icon { font-size: 16px; }
+.reminder-text strong { font-family: var(--font-display); }
+.reminder-text span { color: var(--ink-soft); font-family: var(--font-mono); font-size: 12px; }
+
 /* TABS */
-.tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 18px;
-    background: var(--surface);
-    padding: 6px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    width: fit-content;
-}
-
-.tab-btn {
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.18s;
-}
-
-.tab-btn.active {
-    background: #0f172a;
-    color: white;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
-}
-
-[data-theme="dark"] .tab-btn.active {
-    background: #3b82f6;
-}
-
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--surface-2); padding: 4px; border-radius: 999px; width: fit-content; }
+.tab-btn { border: 0; background: transparent; color: var(--ink-soft); padding: 9px 20px; border-radius: 999px; font-weight: 600; font-size: 13.5px; font-family: var(--font-body); cursor: pointer; transition: .18s; }
+.tab-btn.active { background: var(--ink); color: var(--paper); }
 .tab-content { display: none; }
-.tab-content.active { display: block; }
+.tab-content.active { display: block; animation: fadein .2s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
 
 /* PANEL */
-.panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px;
-    margin-bottom: 16px;
-    transition: background 0.25s, border-color 0.25s;
-}
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; margin-bottom: 16px; }
 
-/* ÜST ANALİZ */
-.analysis-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-}
+/* ANALYSIS */
+.analysis-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.analysis-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); }
+.analysis-date { font-size: 15px; font-weight: 600; margin-top: 3px; font-family: var(--font-mono); }
+.analysis-main { display: grid; grid-template-columns: 1fr auto; gap: 22px; align-items: center; margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px dashed var(--line); }
+.analysis-card-name { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: -.6px; margin: 4px 0 8px; }
+.analysis-reason { color: var(--ink-soft); font-size: 14.5px; line-height: 1.6; max-width: 600px; }
+.analysis-days-box { background: var(--ink); color: var(--paper); padding: 18px 24px; border-radius: var(--radius); text-align: center; min-width: 130px; }
+.analysis-days { font-family: var(--font-mono); font-size: 36px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.analysis-days-label { font-size: 11px; opacity: .75; margin-top: 5px; font-family: var(--font-mono); letter-spacing: .04em; }
 
-.analysis-label {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: var(--muted);
-}
+.rank-list { display: flex; flex-direction: column; gap: 8px; }
+.rank-item { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 13px 15px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); transition: .15s; }
+.rank-item.best { border-color: var(--teal); background: var(--teal-soft); }
+.rank-badge { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; padding: 5px 9px; border-radius: 6px; white-space: nowrap; letter-spacing: .02em; }
+.rank-badge.best { background: var(--teal); color: #fff; }
+.rank-badge.second { background: var(--ochre); color: #fff; }
+.rank-badge.other { background: var(--surface-2); color: var(--ink-soft); }
+.rank-name { font-weight: 700; font-size: 14.5px; display: flex; align-items: center; gap: 8px; font-family: var(--font-display); }
+.rank-details { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--ink-soft); margin-top: 4px; font-family: var(--font-mono); }
+.rank-details strong { color: var(--ink); font-weight: 600; }
+.rank-days { font-family: var(--font-mono); font-size: 18px; font-weight: 700; text-align: right; min-width: 66px; font-variant-numeric: tabular-nums; }
+.rank-days span { display: block; font-size: 10px; font-weight: 500; color: var(--ink-soft); }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.empty-state { text-align: center; padding: 30px 10px; color: var(--ink-soft); font-size: 13.5px; }
 
-.analysis-date {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-top: 2px;
-}
+/* SETTINGS */
+.section-title { margin: 0 0 6px; font-family: var(--font-display); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.section-sub { color: var(--ink-soft); font-size: 13px; margin: 0 0 18px; }
+.reset-btn { background: transparent; border: 1px solid var(--line); color: var(--ink-soft); padding: 7px 13px; border-radius: 999px; font-size: 12px; font-weight: 600; font-family: var(--font-mono); cursor: pointer; transition: .15s; }
+.reset-btn:hover { background: var(--surface-2); color: var(--ink); }
+.reset-btn.danger:hover { background: var(--brick-soft); color: var(--brick); border-color: var(--brick); }
 
-.analysis-main {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 20px;
-}
+.card-settings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.card-setting { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--paper); position: relative; overflow: hidden; }
+.card-setting::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--dot-color, var(--teal)); }
+.card-setting-title { font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; font-size: 14.5px; }
+.card-setting-title input.name-input { flex: 1; border: 1px solid transparent; background: transparent; font-family: var(--font-display); font-size: 14.5px; font-weight: 700; color: var(--ink); padding: 4px 6px; border-radius: 6px; min-width: 0; }
+.card-setting-title input.name-input:hover, .card-setting-title input.name-input:focus { border-color: var(--line); background: var(--surface); outline: none; }
+.card-delete-btn { background: transparent; border: 0; color: var(--ink-soft); font-size: 15px; cursor: pointer; padding: 2px 6px; border-radius: 6px; line-height: 1; }
+.card-delete-btn:hover { background: var(--brick-soft); color: var(--brick); }
+.card-setting label { display: block; font-size: 11.5px; color: var(--ink-soft); margin: 10px 0 5px; font-weight: 500; }
+.card-setting label small { display: block; font-weight: 400; opacity: .8; margin-top: 1px; }
+.card-setting input:not(.name-input) { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; font-family: var(--font-mono); outline: none; background: var(--surface); color: var(--ink); transition: border-color .15s; }
+.card-setting input:not(.name-input):focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(31,111,92,.15); }
 
-.analysis-card-name {
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: -0.6px;
-    margin: 4px 0 6px;
-}
+.add-card-tile { border: 1.5px dashed var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; cursor: pointer; color: var(--ink-soft); font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; min-height: 168px; background: transparent; transition: .15s; }
+.add-card-tile:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-soft); }
+.add-card-tile .plus { font-size: 26px; font-family: var(--font-display); line-height: 1; }
 
-.analysis-reason {
-    color: var(--muted);
-    font-size: 14.5px;
-    line-height: 1.55;
-    max-width: 620px;
-}
+/* REMINDER SETTINGS */
+.reminder-settings-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 20px; }
+.reminder-settings-row label { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.reminder-settings-row input[type="number"] { width: 64px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; font-family: var(--font-mono); font-size: 13.5px; background: var(--surface); color: var(--ink); }
+.notif-btn { background: var(--teal); color: #fff; border: 0; padding: 9px 16px; border-radius: 999px; font-size: 12.5px; font-weight: 600; font-family: var(--font-mono); cursor: pointer; }
+.notif-btn.on { background: var(--surface-2); color: var(--ink-soft); }
+.notif-status { font-size: 12px; color: var(--ink-soft); font-family: var(--font-mono); }
 
-.analysis-days-box {
-    background: linear-gradient(135deg, var(--blue) 0%, #1d4ed8 100%);
-    color: white;
-    padding: 16px 22px;
-    border-radius: 16px;
-    text-align: center;
-    min-width: 130px;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
-}
-
-.analysis-days {
-    font-size: 34px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.analysis-days-label {
-    font-size: 12px;
-    opacity: 0.9;
-    margin-top: 4px;
-}
-
-/* Kart sıralama listesi */
-.rank-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.rank-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 14px;
-    align-items: center;
-    padding: 14px 16px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    transition: 0.15s;
-}
-
-.rank-item.best {
-    border: 2px solid var(--green);
-    background: var(--green-bg);
-}
-
-.rank-badge {
-    font-size: 11px;
-    font-weight: 800;
-    padding: 5px 10px;
-    border-radius: 8px;
-    white-space: nowrap;
-}
-
-.rank-badge.best {
-    background: var(--green);
-    color: white;
-}
-
-.rank-badge.second {
-    background: var(--yellow);
-    color: #422006;
-}
-
-.rank-badge.other {
-    background: var(--border);
-    color: var(--muted);
-}
-
-.rank-name {
-    font-weight: 800;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.rank-details {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    font-size: 12.5px;
-    color: var(--muted);
-    margin-top: 3px;
-}
-
-.rank-details strong {
-    color: var(--text);
-    font-weight: 700;
-}
-
-.rank-days {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--blue);
-    text-align: right;
-    min-width: 70px;
-}
-
-.rank-days span {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-}
-
-/* Kart noktaları */
-.dot {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-.dot-garanti { background: var(--garanti); }
-.dot-isbank { background: var(--isbank); }
-.dot-kuveyt { background: var(--kuveyt); }
-.dot-yapikredi { background: var(--yapikredi); }
-
-/* AYARLAR */
-.section-title {
-    margin: 0 0 16px;
-    font-size: 17px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.reset-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-}
-
-.reset-btn:hover {
-    background: var(--bg);
-    color: var(--text);
-}
-
-.card-settings {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-}
-
-.card-setting {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    background: var(--bg);
-    transition: 0.15s;
-    position: relative;
-    overflow: hidden;
-}
-
-.card-setting::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-}
-
-.card-setting.garanti::before { background: var(--garanti); }
-.card-setting.isbank::before { background: var(--isbank); }
-.card-setting.kuveyt::before { background: var(--kuveyt); }
-.card-setting.yapikredi::before { background: var(--yapikredi); }
-
-.card-setting-title {
-    font-weight: 700;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-}
-
-.card-setting label {
-    display: block;
-    font-size: 12px;
-    color: var(--muted);
-    margin: 10px 0 5px;
-    font-weight: 500;
-}
-
-.card-setting label small {
-    display: block;
-    font-weight: 400;
-    opacity: 0.85;
-    margin-top: 1px;
-}
-
-.card-setting input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 14px;
-    outline: none;
-    background: var(--surface);
-    color: var(--text);
-    transition: border-color 0.15s;
-}
-
-.card-setting input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-/* TAKVİM */
-.calendar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    gap: 12px;
-}
-
-.month-title {
-    font-size: 19px;
-    font-weight: 800;
-    text-transform: capitalize;
-}
-
+/* CALENDAR */
+.calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 12px; }
+.month-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; text-transform: capitalize; }
 .nav-buttons { display: flex; gap: 8px; }
+button { border: 0; background: var(--ink); color: var(--paper); padding: 9px 16px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 13px; font-family: var(--font-body); transition: .15s; }
+button:hover { opacity: .9; transform: translateY(-1px); }
+button.secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+button.secondary:hover { background: var(--surface-2); }
+.weekdays, .calendar { display: grid; grid-template-columns: repeat(7, 1fr); }
+.weekday { text-align: center; color: var(--ink-soft); font-size: 11px; font-weight: 700; padding: 9px 4px; text-transform: uppercase; letter-spacing: .06em; font-family: var(--font-mono); }
+.day { position: relative; min-height: 120px; border: 1px solid var(--line); background: var(--surface); padding: 8px; cursor: pointer; transition: .16s ease; overflow: hidden; }
+.day:hover { transform: translateY(-2px); box-shadow: var(--shadow); z-index: 3; }
+.day.empty { background: color-mix(in srgb, var(--paper) 65%, transparent); cursor: default; }
+.day.empty:hover { transform: none; box-shadow: none; }
+.day.today { outline: 2px solid var(--steel); outline-offset: -2px; z-index: 2; }
+.day.selected { background: var(--teal-soft); }
+.day.is-cutoff-day { background-image: radial-gradient(circle at 6px 0, transparent 4px, var(--line) 4.5px, var(--line) 5px, transparent 5.5px); background-size: 12px 10px; background-repeat: repeat-x; background-position: top left; }
+.day-number { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 13px; margin-bottom: 6px; font-family: var(--font-mono); }
+.today-badge { font-size: 9px; background: var(--steel); color: #fff; padding: 2px 6px; border-radius: 5px; font-weight: 700; font-family: var(--font-mono); }
+.best-card { border-radius: 7px; padding: 6px 7px; margin-bottom: 4px; }
+.best-card strong { display: block; font-size: 12px; line-height: 1.25; font-family: var(--font-body); }
+.best-card small { font-size: 9.5px; opacity: .85; font-family: var(--font-mono); }
+.level-best { background: var(--teal-soft); color: var(--teal); border-left: 3px solid var(--teal); }
+.level-second, .level-warning { background: var(--ochre-soft); color: var(--ochre); border-left: 3px solid var(--ochre); }
+.level-cutoff { background: var(--brick-soft); color: var(--brick); border-left: 3px solid var(--brick); }
+.cutoff-info { font-size: 9px; color: var(--brick); margin-top: 3px; font-weight: 600; font-family: var(--font-mono); }
+.payment-info { font-size: 10px; color: var(--ink-soft); margin-top: 3px; font-family: var(--font-mono); }
+.calendar-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; font-size: 12px; color: var(--ink-soft); font-family: var(--font-mono); }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-color { width: 11px; height: 11px; border-radius: 3px; }
+.legend-teal { background: var(--teal); }
+.legend-ochre { background: var(--ochre); }
+.legend-brick { background: var(--brick); }
+.legend-steel { background: var(--steel); }
 
-button {
-    border: 0;
-    background: #0f172a;
-    color: white;
-    padding: 9px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13.5px;
-    transition: 0.15s;
-}
+.save-hint { font-size: 11px; color: var(--ink-soft); font-family: var(--font-mono); margin-top: 10px; min-height: 14px; }
+.install-hint { font-size: 12px; color: var(--ink-soft); font-family: var(--font-mono); margin-top: 8px; }
 
-button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-button.secondary {
-    background: var(--bg);
-    color: var(--text);
-    border: 1px solid var(--border);
-}
-
-button.secondary:hover { background: var(--border); }
-
-.weekdays,
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-}
-
-.weekday {
-    text-align: center;
-    color: var(--muted);
-    font-size: 11.5px;
-    font-weight: 700;
-    padding: 9px 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.day {
-    position: relative;
-    min-height: 118px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 7px;
-    cursor: pointer;
-    transition: 0.18s ease;
-    overflow: hidden;
-}
-
-.day:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    z-index: 3;
-    border-color: #94a3b8;
-}
-
-.day.empty {
-    background: color-mix(in srgb, var(--bg) 70%, transparent);
-    cursor: default;
-}
-
-.day.empty:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.day.today {
-    outline: 3px solid var(--blue);
-    outline-offset: -3px;
-    z-index: 2;
-}
-
-.day.selected {
-    background: var(--blue-bg);
-}
-
-.day-number {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 800;
-    font-size: 13px;
-    margin-bottom: 5px;
-}
-
-.today-badge {
-    font-size: 9px;
-    background: var(--blue);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 5px;
-    font-weight: 700;
-}
-
-.best-card {
-    border-radius: 9px;
-    padding: 6px 7px;
-    margin-bottom: 4px;
-}
-
-.best-card strong {
-    display: block;
-    font-size: 12px;
-    line-height: 1.25;
-}
-
-.best-card small {
-    font-size: 9.5px;
-    opacity: 0.9;
-}
-
-.level-best {
-    background: var(--green-bg);
-    color: #166534;
-    border-left: 4px solid var(--green);
-}
-[data-theme="dark"] .level-best { color: #86efac; }
-
-.level-second {
-    background: var(--yellow-bg);
-    color: #854d0e;
-    border-left: 4px solid var(--yellow);
-}
-[data-theme="dark"] .level-second { color: #fde047; }
-
-.level-warning {
-    background: var(--orange-bg);
-    color: #9a3412;
-    border-left: 4px solid var(--orange);
-}
-[data-theme="dark"] .level-warning { color: #fdba74; }
-
-.level-cutoff {
-    background: var(--red-bg);
-    color: #991b1b;
-    border-left: 4px solid var(--red);
-}
-[data-theme="dark"] .level-cutoff { color: #fca5a5; }
-
-.cutoff-info {
-    font-size: 9px;
-    color: var(--red);
-    margin-top: 3px;
-    font-weight: 600;
-}
-
-.payment-info {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 3px;
-}
-
-.calendar-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 13px;
-    margin-top: 14px;
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
-}
-
-.legend-green { background: var(--green); }
-.legend-yellow { background: var(--yellow); }
-.legend-orange { background: var(--orange); }
-.legend-red { background: var(--red); }
-.legend-blue { background: var(--blue); }
-
-/* MOBİL */
 @media (max-width: 980px) {
     .card-settings { grid-template-columns: repeat(2, 1fr); }
     .analysis-main { grid-template-columns: 1fr; }
     .analysis-days-box { width: fit-content; }
 }
-
 @media (max-width: 640px) {
-    .container { width: min(100% - 12px, 1180px); padding-top: 12px; }
-    .header h1 { font-size: 21px; }
-    .panel { padding: 14px; border-radius: 14px; }
-    .analysis-card-name { font-size: 24px; }
+    .container { width: min(100% - 14px, 1180px); padding-top: 14px; }
+    .header h1 { font-size: 23px; }
+    .panel { padding: 15px; border-radius: 12px; }
+    .analysis-card-name { font-size: 25px; }
     .card-settings { grid-template-columns: 1fr 1fr; }
-    .day { min-height: 96px; padding: 5px; }
+    .day { min-height: 96px; padding: 6px; }
     .day-number { font-size: 11px; }
     .best-card strong { font-size: 10px; }
     .best-card small { font-size: 8px; }
@@ -642,12 +209,11 @@ button.secondary:hover { background: var(--border); }
     .rank-item { grid-template-columns: 1fr; gap: 8px; }
     .rank-days { text-align: left; }
     .tabs { width: 100%; }
-    .tab-btn { flex: 1; text-align: center; padding: 10px 8px; font-size: 13px; }
+    .tab-btn { flex: 1; text-align: center; padding: 10px 8px; font-size: 12.5px; }
 }
-
 @media (max-width: 420px) {
     .card-settings { grid-template-columns: 1fr; }
-    .day { min-height: 84px; }
+    .day { min-height: 86px; }
 }
 </style>
 </head>
@@ -658,35 +224,38 @@ button.secondary:hover { background: var(--border); }
 
 <header class="header">
     <div>
-        <h1>💳 Akıllı Kredi Kartı Takvimi</h1>
-        <p>Hangi kartı kullanırsan ekstre ve ödeme tarihini en uzağa taşıyabileceğini gösterir.</p>
+        <div class="eyebrow">Kişisel finans · ekstre planlayıcı</div>
+        <h1>Ekstre Takvimi</h1>
+        <p>Hangi kartı kullanırsan ekstre ve son ödeme tarihini en uzağa taşıyabileceğini gösterir.</p>
     </div>
-    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Koyu Mod</button>
+    <div class="header-actions">
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Koyu mod</button>
+    </div>
 </header>
 
-<!-- TABS -->
+<div class="reminder-banner" id="reminderBanner"></div>
+
 <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('main')">Öneri & Takvim</button>
+    <button class="tab-btn active" onclick="switchTab('main')">Öneri &amp; Takvim</button>
     <button class="tab-btn" onclick="switchTab('settings')">Ayarlar</button>
 </div>
 
 <!-- TAB 1: ANA -->
 <div id="tab-main" class="tab-content active">
 
-    <!-- ÜST ANALİZ -->
     <div class="panel">
         <div class="analysis-header">
             <div>
                 <div class="analysis-label" id="analysisLabel">Bugün için öneri</div>
                 <div class="analysis-date" id="analysisDate"></div>
             </div>
-            <button class="secondary" onclick="goToday()" style="font-size:13px;">Bugüne dön</button>
+            <button class="secondary" onclick="goToday()" style="font-size:12.5px;">Bugüne dön</button>
         </div>
 
         <div class="analysis-main">
             <div>
                 <div class="analysis-card-name" id="analysisCard">—</div>
-                <div class="analysis-reason" id="analysisReason">Hesaplanıyor...</div>
+                <div class="analysis-reason" id="analysisReason">Hesaplanıyor…</div>
             </div>
             <div class="analysis-days-box">
                 <div class="analysis-days" id="analysisDays">—</div>
@@ -694,11 +263,9 @@ button.secondary:hover { background: var(--border); }
             </div>
         </div>
 
-        <!-- Kart karşılaştırması -->
         <div class="rank-list" id="rankList"></div>
     </div>
 
-    <!-- TAKVİM -->
     <div class="panel">
         <div class="calendar-header">
             <button class="secondary" onclick="changeMonth(-1)">‹</button>
@@ -710,23 +277,17 @@ button.secondary:hover { background: var(--border); }
         </div>
 
         <div class="weekdays">
-            <div class="weekday">Pzt</div>
-            <div class="weekday">Sal</div>
-            <div class="weekday">Çar</div>
-            <div class="weekday">Per</div>
-            <div class="weekday">Cum</div>
-            <div class="weekday">Cmt</div>
-            <div class="weekday">Paz</div>
+            <div class="weekday">Pzt</div><div class="weekday">Sal</div><div class="weekday">Çar</div>
+            <div class="weekday">Per</div><div class="weekday">Cum</div><div class="weekday">Cmt</div><div class="weekday">Paz</div>
         </div>
 
         <div class="calendar" id="calendar"></div>
 
         <div class="calendar-legend">
-            <div class="legend-item"><span class="legend-color legend-green"></span> En avantajlı</div>
-            <div class="legend-item"><span class="legend-color legend-yellow"></span> İkinci seçenek</div>
-            <div class="legend-item"><span class="legend-color legend-orange"></span> Kesime yaklaşıyor</div>
-            <div class="legend-item"><span class="legend-color legend-red"></span> Ekstre kesim günü</div>
-            <div class="legend-item"><span class="legend-color legend-blue"></span> Bugün</div>
+            <div class="legend-item"><span class="legend-color legend-teal"></span> En avantajlı</div>
+            <div class="legend-item"><span class="legend-color legend-ochre"></span> İkinci seçenek</div>
+            <div class="legend-item"><span class="legend-color legend-brick"></span> Ekstre kesim günü</div>
+            <div class="legend-item"><span class="legend-color legend-steel"></span> Bugün</div>
         </div>
     </div>
 
@@ -734,107 +295,68 @@ button.secondary:hover { background: var(--border); }
 
 <!-- TAB 2: AYARLAR -->
 <div id="tab-settings" class="tab-content">
+
+    <div class="panel">
+        <h2 class="section-title">Hatırlatmalar</h2>
+        <p class="section-sub">Uygulama açıkken kesim ve ödeme günleri için üstte banner, izin verirsen tarayıcı bildirimi gösterilir.</p>
+        <div class="reminder-settings-row">
+            <label>Kesimden <input type="number" id="reminderDaysInput" min="0" max="15" value="3"> gün önce hatırlat</label>
+            <button class="notif-btn" id="notifBtn" onclick="requestNotifPermission()">🔔 Bildirimleri Etkinleştir</button>
+            <span class="notif-status" id="notifStatus"></span>
+        </div>
+    </div>
+
     <div class="panel">
         <h2 class="section-title">
-            <span>Kart ve Ekstre Ayarları</span>
-            <button class="reset-btn" onclick="resetToDefaults()">Varsayılana Dön</button>
+            <span>Kart ve ekstre ayarları</span>
+            <button class="reset-btn danger" onclick="resetToDefaults()">Varsayılana dön</button>
         </h2>
+        <p class="section-sub">Kart adına, kesim gününe ve son ödeme süresine tıklayıp düzenleyebilir, istediğin kadar kart ekleyip çıkarabilirsin.</p>
 
-        <div class="card-settings">
-            <div class="card-setting garanti">
-                <div class="card-setting-title">
-                    <span class="dot dot-garanti"></span> Garanti
-                </div>
-                <label>Ekstre kesim günü</label>
-                <input type="number" min="1" max="31" data-card="Garanti" data-field="cutoff" value="25">
-                <label>Son ödeme günü <small>(kesimden kaç gün sonra)</small></label>
-                <input type="number" min="1" max="40" data-card="Garanti" data-field="paymentOffset" value="10">
-            </div>
-
-            <div class="card-setting isbank">
-                <div class="card-setting-title">
-                    <span class="dot dot-isbank"></span> İş Bankası
-                </div>
-                <label>Ekstre kesim günü</label>
-                <input type="number" min="1" max="31" data-card="İş Bankası" data-field="cutoff" value="29">
-                <label>Son ödeme günü <small>(kesimden kaç gün sonra)</small></label>
-                <input type="number" min="1" max="40" data-card="İş Bankası" data-field="paymentOffset" value="10">
-            </div>
-
-            <div class="card-setting kuveyt">
-                <div class="card-setting-title">
-                    <span class="dot dot-kuveyt"></span> Kuveyt Türk
-                </div>
-                <label>Ekstre kesim günü</label>
-                <input type="number" min="1" max="31" data-card="Kuveyt Türk" data-field="cutoff" value="8">
-                <label>Son ödeme günü <small>(kesimden kaç gün sonra)</small></label>
-                <input type="number" min="1" max="40" data-card="Kuveyt Türk" data-field="paymentOffset" value="10">
-            </div>
-
-            <div class="card-setting yapikredi">
-                <div class="card-setting-title">
-                    <span class="dot dot-yapikredi"></span> Yapı Kredi
-                </div>
-                <label>Ekstre kesim günü</label>
-                <input type="number" min="1" max="31" data-card="Yapı Kredi" data-field="cutoff" value="20">
-                <label>Son ödeme günü <small>(kesimden kaç gün sonra)</small></label>
-                <input type="number" min="1" max="40" data-card="Yapı Kredi" data-field="paymentOffset" value="10">
-            </div>
-        </div>
+        <div class="card-settings" id="cardSettingsGrid"></div>
+        <div class="save-hint" id="saveHint"></div>
     </div>
 </div>
 
 </div>
 
 <script>
-const STORAGE_KEY = "smart_credit_card_calendar_v5";
-const THEME_KEY = "smart_credit_card_theme";
+const STORAGE_KEY = "cards_v2";
+const THEME_KEY = "theme_v1";
+const REMINDER_DAYS_KEY = "reminderDays_v1";
+const NOTIFIED_KEY = "notified_log_v1";
 
-const defaultCards = {
-    "Garanti": { cutoff: 25, paymentOffset: 10 },
-    "İş Bankası": { cutoff: 29, paymentOffset: 10 },
-    "Kuveyt Türk": { cutoff: 8, paymentOffset: 10 },
-    "Yapı Kredi": { cutoff: 20, paymentOffset: 10 }
-};
+const palette = ["#c68a1f", "#3c5a72", "#1f6f5c", "#7a4f8c", "#a8492f", "#4a7c59", "#6b5b95", "#b06a3a", "#2f7d8a", "#8a5a3c"];
 
-const cardDots = {
-    "Garanti": "dot-garanti",
-    "İş Bankası": "dot-isbank",
-    "Kuveyt Türk": "dot-kuveyt",
-    "Yapı Kredi": "dot-yapikredi"
-};
+const defaultCards = [
+    { id: "garanti",   name: "Garanti",     cutoff: 25, paymentOffset: 10 },
+    { id: "isbank",    name: "İş Bankası",  cutoff: 29, paymentOffset: 10 },
+    { id: "kuveyt",    name: "Kuveyt Türk", cutoff: 8,  paymentOffset: 10 },
+    { id: "yapikredi", name: "Yapı Kredi",  cutoff: 20, paymentOffset: 10 }
+];
 
 let cards = structuredClone(defaultCards);
+let reminderDays = 3;
 let currentDate = new Date();
 let selectedDate = new Date();
 
-function normalizeDate(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
+function uid() { return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function colorFor(index) { return palette[index % palette.length]; }
 
-function dateOnly(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-function daysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-}
+function normalizeDate(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
+function dateOnly(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
+function daysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }
 
 function daysUntilCutoff(date, cutoff) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
+    const year = date.getFullYear(), month = date.getMonth(), day = date.getDate();
     if (day < cutoff) return cutoff - day;
     if (day === cutoff) return 0;
     return daysInMonth(year, month) - day + cutoff;
 }
 
 function getStatementInfo(date, card) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
+    const year = date.getFullYear(), month = date.getMonth(), day = date.getDate();
     let cutoffDate;
-
     if (day <= card.cutoff) {
         const validDay = Math.min(card.cutoff, daysInMonth(year, month));
         cutoffDate = new Date(year, month, validDay);
@@ -843,34 +365,25 @@ function getStatementInfo(date, card) {
         const validDay = Math.min(card.cutoff, daysInMonth(next.getFullYear(), next.getMonth()));
         cutoffDate = new Date(next.getFullYear(), next.getMonth(), validDay);
     }
-
     const paymentDate = new Date(cutoffDate);
     paymentDate.setDate(paymentDate.getDate() + card.paymentOffset);
-
     const daysToPayment = Math.round((paymentDate - dateOnly(date)) / 86400000);
     return { cutoffDate, paymentDate, daysToPayment };
 }
 
 function calculateCards(date) {
     const result = [];
-    Object.entries(cards).forEach(([name, card]) => {
+    cards.forEach((card, index) => {
         const statement = getStatementInfo(date, card);
         const daysToCutoff = daysUntilCutoff(date, card.cutoff);
         result.push({
-            name,
-            cutoff: card.cutoff,
-            paymentOffset: card.paymentOffset,
-            cutoffDate: statement.cutoffDate,
-            paymentDate: statement.paymentDate,
-            daysToPayment: statement.daysToPayment,
-            daysToCutoff,
-            score: statement.daysToPayment
+            id: card.id, name: card.name, cutoff: card.cutoff, paymentOffset: card.paymentOffset,
+            color: colorFor(index),
+            cutoffDate: statement.cutoffDate, paymentDate: statement.paymentDate,
+            daysToPayment: statement.daysToPayment, daysToCutoff, score: statement.daysToPayment
         });
     });
-    result.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        return b.daysToCutoff - a.daysToCutoff;
-    });
+    result.sort((a, b) => (b.score !== a.score) ? b.score - a.score : b.daysToCutoff - a.daysToCutoff);
     return result;
 }
 
@@ -878,30 +391,29 @@ function getLevel(item, rank, dayDate) {
     if (item.cutoffDate.getTime() === dateOnly(dayDate).getTime()) return "level-cutoff";
     if (rank === 0) return "level-best";
     if (rank === 1) return "level-second";
-    if (item.daysToCutoff <= 2) return "level-warning";
     return "level-warning";
 }
 
-function formatDate(date) {
-    return date.toLocaleDateString("tr-TR", {
-        weekday: "long", day: "numeric", month: "long", year: "numeric"
-    });
-}
-
-function shortDate(date) {
-    return date.toLocaleDateString("tr-TR", {
-        day: "2-digit", month: "2-digit", year: "numeric"
-    });
-}
-
-function isToday(date) {
-    const t = normalizeDate(new Date());
-    return dateOnly(date).getTime() === t.getTime();
-}
+function formatDate(date) { return date.toLocaleDateString("tr-TR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }); }
+function shortDate(date) { return date.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" }); }
+function isToday(date) { return dateOnly(date).getTime() === normalizeDate(new Date()).getTime(); }
+function dateKey(date) { return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate(); }
 
 function updateAnalysis(date) {
     selectedDate = dateOnly(date);
     const results = calculateCards(selectedDate);
+    const list = document.getElementById("rankList");
+
+    if (!results.length) {
+        document.getElementById("analysisLabel").textContent = "Kart yok";
+        document.getElementById("analysisDate").textContent = formatDate(selectedDate);
+        document.getElementById("analysisCard").textContent = "—";
+        document.getElementById("analysisDays").textContent = "—";
+        document.getElementById("analysisReason").textContent = "Öneri gösterebilmek için Ayarlar sekmesinden en az bir kart ekle.";
+        list.innerHTML = "";
+        return;
+    }
+
     const best = results[0];
     const today = isToday(selectedDate);
 
@@ -920,51 +432,34 @@ function updateAnalysis(date) {
     }
     document.getElementById("analysisReason").textContent = reason;
 
-    // Rank listesini DOM ile oluştur (template literal hatasını önler)
-    const list = document.getElementById("rankList");
     list.innerHTML = "";
-
     results.forEach((item, index) => {
         const div = document.createElement("div");
         div.className = "rank-item" + (index === 0 ? " best" : "");
 
-        // Rozet
         const badge = document.createElement("div");
         badge.className = "rank-badge";
-        if (index === 0) {
-            badge.classList.add("best");
-            badge.textContent = "EN AVANTAJLI";
-        } else if (index === 1) {
-            badge.classList.add("second");
-            badge.textContent = "2. SEÇENEK";
-        } else {
-            badge.classList.add("other");
-            badge.textContent = (index + 1) + ". seçenek";
-        }
+        if (index === 0) { badge.classList.add("best"); badge.textContent = "EN AVANTAJLI"; }
+        else if (index === 1) { badge.classList.add("second"); badge.textContent = "2. SEÇENEK"; }
+        else { badge.classList.add("other"); badge.textContent = (index + 1) + ". seçenek"; }
 
-        // İsim + detay
         const info = document.createElement("div");
-
         const nameDiv = document.createElement("div");
         nameDiv.className = "rank-name";
-
         const dot = document.createElement("span");
-        dot.className = "dot " + (cardDots[item.name] || "");
+        dot.className = "dot";
+        dot.style.background = item.color;
         nameDiv.appendChild(dot);
-
-        const nameText = document.createTextNode(" " + item.name);
-        nameDiv.appendChild(nameText);
+        nameDiv.appendChild(document.createTextNode(" " + item.name));
 
         const details = document.createElement("div");
         details.className = "rank-details";
         details.innerHTML = "<span>Kesim: <strong>" + shortDate(item.cutoffDate) +
-                            "</strong></span><span>Ödeme: <strong>" + shortDate(item.paymentDate) +
-                            "</strong></span>";
+                            "</strong></span><span>Ödeme: <strong>" + shortDate(item.paymentDate) + "</strong></span>";
 
         info.appendChild(nameDiv);
         info.appendChild(details);
 
-        // Gün sayısı
         const daysDiv = document.createElement("div");
         daysDiv.className = "rank-days";
         daysDiv.innerHTML = item.daysToPayment + "<span>gün</span>";
@@ -972,7 +467,6 @@ function updateAnalysis(date) {
         div.appendChild(badge);
         div.appendChild(info);
         div.appendChild(daysDiv);
-
         list.appendChild(div);
     });
 }
@@ -981,11 +475,8 @@ function renderCalendar() {
     const calendar = document.getElementById("calendar");
     calendar.innerHTML = "";
 
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
-    document.getElementById("monthTitle").textContent =
-        currentDate.toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
+    const year = currentDate.getFullYear(), month = currentDate.getMonth();
+    document.getElementById("monthTitle").textContent = currentDate.toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
 
     let firstDay = new Date(year, month, 1).getDay();
     firstDay = firstDay === 0 ? 6 : firstDay - 1;
@@ -1009,11 +500,18 @@ function renderCalendar() {
         if (date.getTime() === selected.getTime()) div.classList.add("selected");
 
         const results = calculateCards(date);
-        const best = results[0];
 
-        const cutoffToday = Object.entries(cards)
-            .filter(([, card]) => card.cutoff === day)
-            .map(([name]) => name);
+        if (!results.length) {
+            div.innerHTML = '<div class="day-number"><span>' + day + '</span>' +
+                (date.getTime() === today.getTime() ? '<span class="today-badge">BUGÜN</span>' : '') + '</div>';
+            div.onclick = function () { selectedDate = dateOnly(date); renderCalendar(); updateAnalysis(selectedDate); };
+            calendar.appendChild(div);
+            continue;
+        }
+
+        const best = results[0];
+        const cutoffToday = cards.filter((c) => c.cutoff === day).map((c) => c.name);
+        if (cutoffToday.length) div.classList.add("is-cutoff-day");
 
         const paymentText = best.daysToPayment === 0 ? "Bugün ödeme" : best.daysToPayment + " gün";
 
@@ -1025,14 +523,9 @@ function renderCalendar() {
             '<strong>' + best.name + '</strong>' +
             '<small>ödeme: ' + shortDate(best.paymentDate) + '</small></div>' +
             '<div class="payment-info">⏳ ' + paymentText + '</div>' +
-            (cutoffToday.length ? '<div class="cutoff-info">🔴 Kesim: ' + cutoffToday.join(", ") + '</div>' : '');
+            (cutoffToday.length ? '<div class="cutoff-info">Kesim: ' + cutoffToday.join(", ") + '</div>' : '');
 
-        div.onclick = function () {
-            selectedDate = dateOnly(date);
-            renderCalendar();
-            updateAnalysis(selectedDate);
-        };
-
+        div.onclick = function () { selectedDate = dateOnly(date); renderCalendar(); updateAnalysis(selectedDate); };
         calendar.appendChild(div);
     }
 }
@@ -1050,63 +543,256 @@ function goToday() {
     updateAnalysis(selectedDate);
 }
 
-function saveSettings() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+/* ---------- PERSISTENCE (localStorage — this app runs as a standalone static site) ---------- */
+let saveHintTimer = null;
+function flashHint(msg) {
+    const el = document.getElementById("saveHint");
+    if (!el) return;
+    el.textContent = msg;
+    clearTimeout(saveHintTimer);
+    saveHintTimer = setTimeout(() => { el.textContent = ""; }, 1800);
 }
 
-function loadSettings() {
+function saveCards() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+        flashHint("Kaydedildi ✓");
+    } catch (e) {
+        console.warn("Kartlar kaydedilemedi", e);
+        flashHint("Kaydedilemedi, tekrar deneyin.");
+    }
+}
+
+function loadCards() {
     try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
             const parsed = JSON.parse(saved);
-            Object.entries(parsed).forEach(([name, data]) => {
-                if (cards[name]) cards[name] = Object.assign({}, cards[name], data);
-            });
+            if (Array.isArray(parsed) && parsed.length) cards = parsed;
         }
     } catch (e) {
-        console.warn("Ayarlar okunamadı", e);
+        console.warn("Kartlar okunamadı", e);
     }
+}
 
-    document.querySelectorAll(".card-setting input").forEach(function (input) {
-        const name = input.dataset.card;
-        const field = input.dataset.field;
-        input.value = cards[name][field];
+function saveReminderDays() {
+    try { localStorage.setItem(REMINDER_DAYS_KEY, String(reminderDays)); } catch (e) {}
+}
+function loadReminderDays() {
+    try {
+        const v = localStorage.getItem(REMINDER_DAYS_KEY);
+        if (v !== null) reminderDays = Math.max(0, parseInt(v, 10) || 0);
+    } catch (e) {}
+}
 
-        input.addEventListener("change", function () {
-            let value = parseInt(input.value, 10);
-            if (!Number.isFinite(value)) value = 1;
-            if (field === "cutoff") value = Math.max(1, Math.min(31, value));
-            else value = Math.max(1, Math.min(40, value));
+/* ---------- CARD SETTINGS UI ---------- */
+function renderCardSettings() {
+    const grid = document.getElementById("cardSettingsGrid");
+    grid.innerHTML = "";
 
-            cards[name][field] = value;
-            input.value = value;
-            saveSettings();
+    cards.forEach((card, index) => {
+        const tile = document.createElement("div");
+        tile.className = "card-setting";
+        tile.style.setProperty("--dot-color", colorFor(index));
+
+        const title = document.createElement("div");
+        title.className = "card-setting-title";
+
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.style.background = colorFor(index);
+        dot.style.flexShrink = "0";
+
+        const nameInput = document.createElement("input");
+        nameInput.className = "name-input";
+        nameInput.type = "text";
+        nameInput.value = card.name;
+        nameInput.maxLength = 24;
+        nameInput.addEventListener("change", function () {
+            const val = nameInput.value.trim();
+            card.name = val || card.name;
+            nameInput.value = card.name;
+            saveCards();
             renderCalendar();
             updateAnalysis(selectedDate);
+            renderReminders();
         });
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "card-delete-btn";
+        delBtn.type = "button";
+        delBtn.title = "Kartı sil";
+        delBtn.textContent = "✕";
+        delBtn.onclick = function () {
+            if (cards.length <= 1) { flashHint("En az bir kart kalmalı."); return; }
+            cards = cards.filter((c) => c.id !== card.id);
+            saveCards();
+            renderCardSettings();
+            renderCalendar();
+            updateAnalysis(selectedDate);
+            renderReminders();
+        };
+
+        title.appendChild(dot);
+        title.appendChild(nameInput);
+        title.appendChild(delBtn);
+
+        const cutoffLabel = document.createElement("label");
+        cutoffLabel.textContent = "Ekstre kesim günü";
+        const cutoffInput = document.createElement("input");
+        cutoffInput.type = "number"; cutoffInput.min = 1; cutoffInput.max = 31; cutoffInput.value = card.cutoff;
+
+        const offsetLabel = document.createElement("label");
+        offsetLabel.innerHTML = "Son ödeme günü <small>(kesimden kaç gün sonra)</small>";
+        const offsetInput = document.createElement("input");
+        offsetInput.type = "number"; offsetInput.min = 1; offsetInput.max = 40; offsetInput.value = card.paymentOffset;
+
+        function commit() {
+            let c = parseInt(cutoffInput.value, 10); if (!Number.isFinite(c)) c = 1;
+            let o = parseInt(offsetInput.value, 10); if (!Number.isFinite(o)) o = 1;
+            card.cutoff = Math.max(1, Math.min(31, c));
+            card.paymentOffset = Math.max(1, Math.min(40, o));
+            cutoffInput.value = card.cutoff;
+            offsetInput.value = card.paymentOffset;
+            saveCards();
+            renderCalendar();
+            updateAnalysis(selectedDate);
+            renderReminders();
+        }
+        cutoffInput.addEventListener("change", commit);
+        offsetInput.addEventListener("change", commit);
+
+        tile.appendChild(title);
+        tile.appendChild(cutoffLabel);
+        tile.appendChild(cutoffInput);
+        tile.appendChild(offsetLabel);
+        tile.appendChild(offsetInput);
+        grid.appendChild(tile);
     });
+
+    const addTile = document.createElement("div");
+    addTile.className = "add-card-tile";
+    addTile.innerHTML = '<span class="plus">+</span><span>Kart Ekle</span>';
+    addTile.onclick = function () {
+        cards.push({ id: uid(), name: "Yeni Kart", cutoff: 15, paymentOffset: 10 });
+        saveCards();
+        renderCardSettings();
+        renderCalendar();
+        updateAnalysis(selectedDate);
+        renderReminders();
+        const inputs = grid.querySelectorAll(".name-input");
+        const last = inputs[inputs.length - 1];
+        if (last) { last.focus(); last.select(); }
+    };
+    grid.appendChild(addTile);
 }
 
 function resetToDefaults() {
     cards = structuredClone(defaultCards);
-    saveSettings();
-    document.querySelectorAll(".card-setting input").forEach(function (input) {
-        const name = input.dataset.card;
-        const field = input.dataset.field;
-        input.value = cards[name][field];
-    });
+    saveCards();
+    renderCardSettings();
     renderCalendar();
     updateAnalysis(selectedDate);
+    renderReminders();
 }
 
-function switchTab(tab) {
-    document.querySelectorAll(".tab-btn").forEach(function (btn) {
-        btn.classList.remove("active");
+/* ---------- REMINDERS ---------- */
+function getNotifiedLog() {
+    try { return JSON.parse(localStorage.getItem(NOTIFIED_KEY) || "{}"); } catch (e) { return {}; }
+}
+function markNotified(key) {
+    const log = getNotifiedLog();
+    log[key] = dateKey(new Date());
+    try { localStorage.setItem(NOTIFIED_KEY, JSON.stringify(log)); } catch (e) {}
+}
+function alreadyNotifiedToday(key) {
+    const log = getNotifiedLog();
+    return log[key] === dateKey(new Date());
+}
+
+function computeDueReminders() {
+    const today = normalizeDate(new Date());
+    const due = [];
+    cards.forEach((card) => {
+        const dtc = daysUntilCutoff(today, card.cutoff);
+        if (dtc <= reminderDays) {
+            due.push({
+                type: "cutoff", cardId: card.id, cardName: card.name,
+                urgent: dtc === 0,
+                text: dtc === 0 ? (card.name + " bugün kesim günü.") : (card.name + " kartının kesimine " + dtc + " gün kaldı.")
+            });
+        }
+        const statement = getStatementInfo(today, card);
+        if (dateOnly(statement.paymentDate).getTime() === today.getTime()) {
+            due.push({ type: "payment", cardId: card.id, cardName: card.name, urgent: true, text: card.name + " için bugün son ödeme günü." });
+        }
     });
-    document.querySelectorAll(".tab-content").forEach(function (c) {
-        c.classList.remove("active");
+    return due;
+}
+
+function renderReminders() {
+    const banner = document.getElementById("reminderBanner");
+    banner.innerHTML = "";
+    const due = computeDueReminders();
+
+    due.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "reminder-item " + (item.urgent ? "urgent" : "soon");
+        div.innerHTML = '<span class="reminder-icon">' + (item.type === "payment" ? "💳" : "🗓️") + '</span>' +
+            '<span class="reminder-text"><strong>' + item.text + '</strong></span>';
+        banner.appendChild(div);
     });
 
+    if (Notification && Notification.permission === "granted") {
+        due.forEach((item) => {
+            const key = item.cardId + "_" + item.type;
+            if (!alreadyNotifiedToday(key)) {
+                try {
+                    new Notification("Ekstre Takvimi", { body: item.text, icon: "./icon-192.png" });
+                    markNotified(key);
+                } catch (e) {}
+            }
+        });
+    }
+}
+
+function requestNotifPermission() {
+    if (!("Notification" in window)) {
+        flashHint("Bu tarayıcı bildirimleri desteklemiyor.");
+        return;
+    }
+    Notification.requestPermission().then(function (perm) {
+        updateNotifButton();
+        if (perm === "granted") renderReminders();
+    });
+}
+
+function updateNotifButton() {
+    const btn = document.getElementById("notifBtn");
+    const status = document.getElementById("notifStatus");
+    if (!("Notification" in window)) {
+        status.textContent = "Tarayıcı desteklemiyor";
+        btn.disabled = true;
+        return;
+    }
+    if (Notification.permission === "granted") {
+        btn.textContent = "🔔 Bildirimler Açık";
+        btn.classList.add("on");
+        status.textContent = "Uygulama açıkken kesim/ödeme günlerinde bildirim alırsın.";
+    } else if (Notification.permission === "denied") {
+        btn.textContent = "🔕 Bildirimler Engellendi";
+        btn.classList.add("on");
+        status.textContent = "Tarayıcı ayarlarından izin vermen gerekiyor.";
+    } else {
+        btn.textContent = "🔔 Bildirimleri Etkinleştir";
+        status.textContent = "Not: bildirimler yalnızca uygulama açıkken tetiklenir.";
+    }
+}
+
+/* ---------- TABS / THEME ---------- */
+function switchTab(tab) {
+    document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach((c) => c.classList.remove("active"));
     if (tab === "main") {
         document.querySelector('.tab-btn[onclick*="main"]').classList.add("active");
         document.getElementById("tab-main").classList.add("active");
@@ -1121,26 +807,54 @@ function toggleTheme() {
     const isDark = html.getAttribute("data-theme") === "dark";
     if (isDark) {
         html.removeAttribute("data-theme");
-        localStorage.setItem(THEME_KEY, "light");
-        document.getElementById("themeBtn").innerHTML = "🌙 Koyu Mod";
+        document.getElementById("themeBtn").innerHTML = "🌙 Koyu mod";
+        try { localStorage.setItem(THEME_KEY, "light"); } catch (e) {}
     } else {
         html.setAttribute("data-theme", "dark");
-        localStorage.setItem(THEME_KEY, "dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Açık Mod";
+        document.getElementById("themeBtn").innerHTML = "☀️ Açık mod";
+        try { localStorage.setItem(THEME_KEY, "dark"); } catch (e) {}
     }
 }
 
 function loadTheme() {
-    if (localStorage.getItem(THEME_KEY) === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-        document.getElementById("themeBtn").innerHTML = "☀️ Açık Mod";
-    }
+    try {
+        if (localStorage.getItem(THEME_KEY) === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            document.getElementById("themeBtn").innerHTML = "☀️ Açık mod";
+        }
+    } catch (e) {}
 }
 
-loadTheme();
-loadSettings();
-renderCalendar();
-updateAnalysis(normalizeDate(new Date()));
+/* ---------- INIT ---------- */
+(function init() {
+    loadTheme();
+    loadCards();
+    loadReminderDays();
+
+    document.getElementById("reminderDaysInput").value = reminderDays;
+    document.getElementById("reminderDaysInput").addEventListener("change", function (e) {
+        let v = parseInt(e.target.value, 10);
+        if (!Number.isFinite(v)) v = 0;
+        reminderDays = Math.max(0, Math.min(15, v));
+        e.target.value = reminderDays;
+        saveReminderDays();
+        renderReminders();
+    });
+
+    updateNotifButton();
+    renderCardSettings();
+    renderCalendar();
+    updateAnalysis(normalizeDate(new Date()));
+    renderReminders();
+
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+            navigator.serviceWorker.register("./sw.js").catch(function (err) {
+                console.warn("Service worker kaydı başarısız", err);
+            });
+        });
+    }
+})();
 </script>
 
 </body>
